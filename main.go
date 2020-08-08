@@ -1,21 +1,16 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "net/http"
+    "os"
+)
+
+func handler(writer http.ResponseWriter, request *http.Request) {
+    fmt.Fprintf(writer, "Hello World, %s!", request.URL.Path[1:])
+}
 
 func main() {
-
-    var a = "initial"
-    fmt.Println(a)
-
-    var b, c int = 1, 2
-    fmt.Println(b, c)
-
-    var d = true
-    fmt.Println(d)
-
-    var e int
-    fmt.Println(e)
-
-    f := "apple"
-    fmt.Println(f)
+    http.HandleFunc("/", handler)
+    http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }
