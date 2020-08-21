@@ -9,7 +9,7 @@
 package main
 
 import (
-	sw "https://github.com/osolano1991/Sistemas-Distribuidos/go"
+	sw "github.com/osolano1991/Sistemas-Distribuidos/go"
 	"log"
 	"net/http"
 	"os"
