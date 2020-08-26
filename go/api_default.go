@@ -72,6 +72,7 @@ func AuthorsAuthorIdDelete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// Obtiene el Author por ID
 func AuthorsAuthorIdGet(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
 	i := findAuthor(id)
@@ -90,6 +91,13 @@ func AuthorsAuthorIdPut(w http.ResponseWriter, r *http.Request) {
 }
 
 func AuthorsPost(w http.ResponseWriter, r *http.Request) {
+	var author Author
+	err := json.NewDecoder(r.Body).Decode(&author)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	authors = append(authors, author)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
@@ -104,6 +112,7 @@ func BooksBookIdDelete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// Obtiene el Book por ID
 func BooksBookIdGet(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
 	i := findBook(id)
@@ -127,24 +136,31 @@ func BooksBookIdPut(w http.ResponseWriter, r *http.Request) {
 }
 
 func BooksPost(w http.ResponseWriter, r *http.Request) {
+	var book Book
+	err := json.NewDecoder(r.Body).Decode(&book)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	books = append(books, book)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
 func PublishersPost(w http.ResponseWriter, r *http.Request) {
+	var publisher Publisher
+	err := json.NewDecoder(r.Body).Decode(&publisher)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	publishers = append(publishers, publisher)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
 func PublishersPublisherIdBooksGet(w http.ResponseWriter, r *http.Request) {
-	id := path.Base(r.URL.Path)
-	i := findPublisher(id)
-	if i == -1 {
-		return
-	}
-	dataJson, _ := json.Marshal(publishers[i])
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Write(dataJson)
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -153,8 +169,16 @@ func PublishersPublisherIdDelete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// Obtiene el Publisher por ID
 func PublishersPublisherIdGet(w http.ResponseWriter, r *http.Request) {
+	id := path.Base(r.URL.Path)
+	i := findPublisher(id)
+	if i == -1 {
+		return
+	}
+	dataJson, _ := json.Marshal(publishers[i])
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Write(dataJson)
 	w.WriteHeader(http.StatusOK)
 }
 
