@@ -8,17 +8,15 @@
  */
 package swagger
 
-type Book struct {
-
-	BookId string `json:"bookId,omitempty"`
+type Publisher struct {
 
 	PublisherId string `json:"publisherId,omitempty"`
 
-	Title string `json:"title,omitempty"`
+	Name string `json:"name,omitempty"`
 
-	Copyright string `json:"copyright,omitempty"`
+	Country string `json:"country,omitempty"`
 
-	Edition string `json:"edition,omitempty"`
+	Founded string `json:"founded,omitempty"`
 
-	Pages string `json:"pages,omitempty"`
+	Genere string `json:"genere,omitempty"`
 }
