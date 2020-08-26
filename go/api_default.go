@@ -73,7 +73,14 @@ func AuthorsAuthorIdDelete(w http.ResponseWriter, r *http.Request) {
 }
 
 func AuthorsAuthorIdGet(w http.ResponseWriter, r *http.Request) {
+	id := path.Base(r.URL.Path)
+	i := findAuthor(id)
+	if i == -1 {
+		return
+	}
+	dataJson, _ := json.Marshal(authors[i])
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Write(dataJson)
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -130,7 +137,14 @@ func PublishersPost(w http.ResponseWriter, r *http.Request) {
 }
 
 func PublishersPublisherIdBooksGet(w http.ResponseWriter, r *http.Request) {
+	id := path.Base(r.URL.Path)
+	i := findPublisher(id)
+	if i == -1 {
+		return
+	}
+	dataJson, _ := json.Marshal(publishers[i])
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Write(dataJson)
 	w.WriteHeader(http.StatusOK)
 }
 
