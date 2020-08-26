@@ -9,8 +9,58 @@
 package swagger
 
 import (
+	"encoding/json"
 	"net/http"
+	"path"
 )
+
+var books = []Book{
+	Book{BookId: "1", PublisherId: "1", Title: "Libro 1",
+		Copyright: "2012", Edition: "5th", Pages: "976"},
+	Book{BookId: "2", PublisherId: "1", Title: "Libro 2",
+		Copyright: "2010", Edition: "9th", Pages: "1500"},
+}
+
+var authors = []Author{
+	Author{AuthorId: "1", BookId: "1", Name: "OSCAR", Nationality: "Costa Rica",
+		Birth: "1990", Genere: "First"},
+	Author{AuthorId: "2", BookId: "2", Name: "MARIO", Nationality: "Costa Rica",
+		Birth: "1991", Genere: "Second"},
+}
+
+var publishers = []Publisher{
+	Publisher{PublisherId: "1", Name: "Yensie", Country: "Inglaterra", Founded: "Costa Rica",
+		Genere: "First"},
+	Publisher{PublisherId: "2", Name: "Tatiana", Country: "Italia", Founded: "Costa Rica",
+		Genere: "Second"},
+}
+
+func findBook(x string) int {
+	for i, book := range books {
+		if x == book.BookId {
+			return i
+		}
+	}
+	return -1
+}
+
+func findAuthor(x string) int {
+	for i, author := range authors {
+		if x == author.AuthorId {
+			return i
+		}
+	}
+	return -1
+}
+
+func findPublisher(x string) int {
+	for i, publishers := range publishers {
+		if x == publishers.PublisherId {
+			return i
+		}
+	}
+	return -1
+}
 
 func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -48,7 +98,14 @@ func BooksBookIdDelete(w http.ResponseWriter, r *http.Request) {
 }
 
 func BooksBookIdGet(w http.ResponseWriter, r *http.Request) {
+	id := path.Base(r.URL.Path)
+	i := findBook(id)
+	if i == -1 {
+		return
+	}
+	dataJson, _ := json.Marshal(books[i])
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Write(dataJson)
 	w.WriteHeader(http.StatusOK)
 }
 
