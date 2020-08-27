@@ -64,6 +64,16 @@ func findPublisher(x string) int {
 }
 
 func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("TEST")
+	id := path.Base(r.URL.Path)
+	i := findAuthor(id)
+	if i == -1 {
+		//return
+		fmt.Println("Id Invalido")
+	}
+
+	json.NewEncoder(w).Encode(books)
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
