@@ -10,6 +10,7 @@ package swagger
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"path"
 )
@@ -108,6 +109,22 @@ func BooksBookIdAuthorsGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func BooksBookIdDelete(w http.ResponseWriter, r *http.Request) {
+	/*
+				id := path.Base(r.URL.Path)
+		    i := find(id)
+		    if i == -1 {
+		        fmt.Println("Id Invalido")
+		       // fmt.Fprintf(w,"Id Invalido %v",i)
+		    }
+		    books = append(books[:i], books[i+1:]...)
+	*/
+	id := path.Base(r.URL.Path)
+	i := findBook(id)
+	if i == -1 {
+		//return
+		fmt.Println("Id Invalido")
+	}
+	books = append(books[:i], books[i+1:]...)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
