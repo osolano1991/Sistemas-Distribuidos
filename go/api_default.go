@@ -245,7 +245,7 @@ func PublishersPublisherIdGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func PublishersPublisherIdPut(w http.ResponseWriter, r *http.Request) {
-	id := path.Base(r.URL.Path)
+	/*id := path.Base(r.URL.Path)
 
 	for index, item := range publishers {
 		if item.PublisherId == id {
@@ -258,6 +258,27 @@ func PublishersPublisherIdPut(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)*/
+
+	id := path.Base(r.URL.Path)
+	i := findPublisher(id)
+	if i == -1 {
+		//return
+		fmt.Println("Id Invalido")
+	}
+	publishers = append(publishers[:i], publishers[i+1:]...)
+
+	len := r.ContentLength
+	body := make([]byte, len)
+	r.Body.Read(body)
+	updatePublisher := Publisher{}
+	json.Unmarshal(body, &updatePublisher)
+
+	updatePublisher.PublisherId = id
+	publishers = append(publishers, updatePublisher)
+	json.NewEncoder(w).Encode(publishers)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
