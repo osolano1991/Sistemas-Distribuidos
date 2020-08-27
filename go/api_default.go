@@ -94,6 +94,20 @@ func AuthorsAuthorIdGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func AuthorsAuthorIdPut(w http.ResponseWriter, r *http.Request) {
+	id := path.Base(r.URL.Path)
+
+	for index, item := range authors {
+		if item.AuthorId == id {
+			authors = append(authors[:index], authors[index+1:]...)
+			var author Author
+			_ = json.NewDecoder(r.Body).Decode(&author)
+			author.AuthorId = id
+			authors = append(authors, author)
+			json.NewEncoder(w).Encode(&author)
+			return
+		}
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
@@ -146,10 +160,25 @@ func BooksBookIdPublishersGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func BooksBookIdPut(w http.ResponseWriter, r *http.Request) {
+	id := path.Base(r.URL.Path)
+
+	for index, item := range books {
+		if item.BookId == id {
+			books = append(books[:index], books[index+1:]...)
+			var book Book
+			_ = json.NewDecoder(r.Body).Decode(&book)
+			book.BookId = id
+			books = append(books, book)
+			json.NewEncoder(w).Encode(&book)
+			return
+		}
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
+//POST BOOK
 func BooksPost(w http.ResponseWriter, r *http.Request) {
 	var book Book
 	err := json.NewDecoder(r.Body).Decode(&book)
@@ -162,6 +191,7 @@ func BooksPost(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+//POST Publisher
 func PublishersPost(w http.ResponseWriter, r *http.Request) {
 	var publisher Publisher
 	err := json.NewDecoder(r.Body).Decode(&publisher)
@@ -205,6 +235,20 @@ func PublishersPublisherIdGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func PublishersPublisherIdPut(w http.ResponseWriter, r *http.Request) {
+	id := path.Base(r.URL.Path)
+
+	for index, item := range publishers {
+		if item.PublisherId == id {
+			publishers = append(publishers[:index], publishers[index+1:]...)
+			var publisher Publisher
+			_ = json.NewDecoder(r.Body).Decode(&publisher)
+			publisher.PublisherId = id
+			publishers = append(publishers, publisher)
+			json.NewEncoder(w).Encode(&publisher)
+			return
+		}
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
