@@ -36,6 +36,7 @@ var publishers = []Publisher{
 		Genere: "Second"},
 }
 
+//BUSCA POR ID BOOOK
 func findBook(x string) int {
 	for i, book := range books {
 		if x == book.BookId {
@@ -45,6 +46,7 @@ func findBook(x string) int {
 	return -1
 }
 
+//BUSCA POR ID AUTHOR
 func findAuthor(x string) int {
 	for i, author := range authors {
 		if x == author.AuthorId {
@@ -54,6 +56,7 @@ func findAuthor(x string) int {
 	return -1
 }
 
+//BUSCA POR ID PUBLISHER
 func findPublisher(x string) int {
 	for i, publishers := range publishers {
 		if x == publishers.PublisherId {
@@ -63,6 +66,7 @@ func findPublisher(x string) int {
 	return -1
 }
 
+//  /authors/1/books/
 func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("TEST")
 	id := path.Base(r.URL.Path)
@@ -78,6 +82,7 @@ func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+//DELETE AUTHOR
 func AuthorsAuthorIdDelete(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
 	i := findAuthor(id)
@@ -103,6 +108,7 @@ func AuthorsAuthorIdGet(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+//PUT AUTHOR
 func AuthorsAuthorIdPut(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
 
@@ -122,6 +128,7 @@ func AuthorsAuthorIdPut(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+//POST AUTHOR
 func AuthorsPost(w http.ResponseWriter, r *http.Request) {
 	var author Author
 	err := json.NewDecoder(r.Body).Decode(&author)
@@ -134,11 +141,13 @@ func AuthorsPost(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+//  /books/1/authors/
 func BooksBookIdAuthorsGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
+//DELETE BOOK
 func BooksBookIdDelete(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
 	i := findBook(id)
@@ -164,11 +173,13 @@ func BooksBookIdGet(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+//  /books/1/publishers/
 func BooksBookIdPublishersGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
+//PUT BOOK
 func BooksBookIdPut(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
 
@@ -214,6 +225,7 @@ func PublishersPost(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+//  /publishers/1/books/
 func PublishersPublisherIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
@@ -244,8 +256,9 @@ func PublishersPublisherIdGet(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+//PUT PUBLISHERS
 func PublishersPublisherIdPut(w http.ResponseWriter, r *http.Request) {
-	/*id := path.Base(r.URL.Path)
+	id := path.Base(r.URL.Path)
 
 	for index, item := range publishers {
 		if item.PublisherId == id {
@@ -260,9 +273,9 @@ func PublishersPublisherIdPut(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)*/
+	w.WriteHeader(http.StatusOK)
 
-	id := path.Base(r.URL.Path)
+	/*id := path.Base(r.URL.Path)
 	i := findPublisher(id)
 	if i == -1 {
 		//return
@@ -281,5 +294,5 @@ func PublishersPublisherIdPut(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(publishers)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusOK)*/
 }
