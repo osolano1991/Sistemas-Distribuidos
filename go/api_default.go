@@ -21,10 +21,12 @@ var books = []Book{
 		Copyright: "2012", Edition: "5th", Pages: "976"},
 	Book{BookId: "2", PublisherId: "1", Title: "Libro 2",
 		Copyright: "2010", Edition: "9th", Pages: "1500"},
+	Book{BookId: "3", PublisherId: "1", Title: "Libro 3",
+		Copyright: "2010", Edition: "9th", Pages: "1500"},
 }
 
 var authors = []Author{
-	Author{AuthorId: "1", BookId: "1", Name: "OSCAR", Nationality: "Costa Rica",
+	Author{AuthorId: "1", BookId: "3", Name: "OSCAR", Nationality: "Costa Rica",
 		Birth: "1990", Genere: "First"},
 	Author{AuthorId: "2", BookId: "2", Name: "MARIO", Nationality: "Costa Rica",
 		Birth: "1991", Genere: "Second"},
@@ -41,8 +43,30 @@ var publishers = []Publisher{
 
 //BUSCA POR ID BOOOK
 func findBook(x string) int {
+	for _, book := range books {
+		if x == book.BookId {
+			s2, _ := strconv.Atoi(book.BookId)
+			return s2
+		}
+	}
+	return -1
+}
+
+//BUSCA POR ID BOOOK
+func findBookPos(x string) int {
 	for i, book := range books {
 		if x == book.BookId {
+			//s2, _ := strconv.Atoi(book.BookId)
+			return i
+		}
+	}
+	return -1
+}
+
+func findAuthorPos(x string) int {
+	for i, author := range authors {
+		if x == author.AuthorId {
+			//s2, _ := strconv.Atoi(book.BookId)
 			return i
 		}
 	}
@@ -51,19 +75,22 @@ func findBook(x string) int {
 
 //BUSCA POR ID AUTHOR
 func findAuthor(x string) int {
-	for i, author := range authors {
+	for _, author := range authors {
 		if x == author.AuthorId {
-			return i
+			//fmt.Println("Bookid", author.Name)
+			s2, _ := strconv.Atoi(author.AuthorId)
+			return s2
 		}
 	}
 	return -1
 }
 
 //BUSCA POR ID AUTHOR
-func findBookbyAuthor(x string) int {
-	for i, author := range authors {
-		if x == author.BookId {
-			return i
+func findBookIdbyAuthor(x string) int {
+	for _, author := range authors {
+		if x == author.AuthorId {
+			s2, _ := strconv.Atoi(author.BookId)
+			return s2
 		}
 	}
 	return -1
@@ -71,8 +98,20 @@ func findBookbyAuthor(x string) int {
 
 //BUSCA POR ID PUBLISHER
 func findPublisher(x string) int {
+	for _, publishers := range publishers {
+		if x == publishers.PublisherId {
+			s2, _ := strconv.Atoi(publishers.PublisherId)
+			return s2
+		}
+	}
+	return -1
+}
+
+//BUSCA POR ID PUBLISHER
+func findPublisherPos(x string) int {
 	for i, publishers := range publishers {
 		if x == publishers.PublisherId {
+			//s2, _ := strconv.Atoi(publishers.PublisherId)
 			return i
 		}
 	}
@@ -81,42 +120,75 @@ func findPublisher(x string) int {
 
 //  /authors/1/books/
 func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
-	//fmt.Println("TEST")
-	//	id1 := path.Abs(r.URL.Path)
+	//Obtener el id del Author del path
 	idTemp := path.Dir(r.URL.Path)
 	idTemp2 := path.Dir(idTemp)
 
 	id := path.Base(idTemp2)
-
-	fmt.Println("URL -> ", id)
-
-	//fmt.Println("Glob -> ", id6)
+	fmt.Println("id ", id)
+	//Se busca el id del path en los autores
 	i := findAuthor(id)
-	if i == -1 {
-		//return
-		fmt.Println("Id Invalido")
+	fmt.Println("i: ", i)
+	if i != -1 {
+		//se parsea de int to String
+		s := strconv.Itoa(i)
+		fmt.Println("s: ", s)
+		//Si existe el author se obtiene el id del libro del author
+		idBook := findBookIdbyAuthor(s)
+		fmt.Println("idBook: ", idBook)
+		//s2, _ := strconv.Atoi(s)
+		if idBook != -1 {
+			//se parsea de int to String
+			p := strconv.Itoa(idBook)
+			fmt.Println("p: ", p)
+			//Se busca el Id del libro obtenido del author en Book
+			bookId := findBook(p)
+			fmt.Println("bookId: ", bookId)
+			//p2, _ := strconv.Atoi(p)
+			if bookId != -1 {
+				//fmt.Println("findBook invalido")
+				p2 := strconv.Itoa(idBook)
+				fmt.Println("p2: ", p2)
+				bookId2 := findBookPos(p2)
+				fmt.Println("bookId2: ", bookId2)
+				dataJson, _ := json.Marshal(books[bookId2])
+				w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+				w.Write(dataJson)
+				w.WriteHeader(http.StatusOK)
+			} else {
+				fmt.Println("findBook invalido")
+			}
+		} else {
+			fmt.Println("idBook invalido")
+		}
+	} else {
+		fmt.Println("idAuthor invalido")
 	}
+	/*
+		//se parsea de int to String
+		s := strconv.Itoa(i)
 
-	//=================================
-	s := strconv.Itoa(i)
-	idBook := findBookbyAuthor(s)
-	if idBook == -1 {
-		//return
-		fmt.Println("idBook invalido")
-	}
+		//Si existe el author se obtiene el id del libro del author
+		idBook := findBookIdbyAuthor(s)
+		if idBook == -1 {
+			//return
+			fmt.Println("idBook invalido")
+		}
 
-	p := strconv.Itoa(idBook)
+		//se parsea de int to String
+		p := strconv.Itoa(idBook)
 
-	bookId := findBook(p)
-	if bookId == -1 {
-		fmt.Println("findBook invalido")
-	}
-	dataJson, _ := json.Marshal(books[i])
+		//Se busca el Id del libro obtenido del author en Book
+		bookId := findBook(p)
+		if bookId == -1 {
+			fmt.Println("findBook invalido")
+		}
+		dataJson, _ := json.Marshal(books[i])*/
 
 	//json.NewEncoder(w).Encode(books)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Write(dataJson)
+	//w.Write(dataJson)
 	w.WriteHeader(http.StatusOK)
 
 	/*
@@ -135,7 +207,7 @@ func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
 //DELETE AUTHOR
 func AuthorsAuthorIdDelete(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
-	i := findAuthor(id)
+	i := findAuthorPos(id)
 	if i == -1 {
 		//return
 		fmt.Println("Id Invalido")
@@ -148,7 +220,7 @@ func AuthorsAuthorIdDelete(w http.ResponseWriter, r *http.Request) {
 // Obtiene el Author por ID
 func AuthorsAuthorIdGet(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
-	i := findAuthor(id)
+	i := findAuthorPos(id)
 	if i == -1 {
 		return
 	}
@@ -214,7 +286,7 @@ func BooksBookIdAuthorsGet(w http.ResponseWriter, r *http.Request) {
 //DELETE BOOK
 func BooksBookIdDelete(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
-	i := findBook(id)
+	i := findBookPos(id)
 	if i == -1 {
 		//return
 		fmt.Println("Id Invalido")
@@ -227,7 +299,7 @@ func BooksBookIdDelete(w http.ResponseWriter, r *http.Request) {
 // Obtiene el Book por ID
 func BooksBookIdGet(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
-	i := findBook(id)
+	i := findBookPos(id)
 	if i == -1 {
 		return
 	}
@@ -297,7 +369,7 @@ func PublishersPublisherIdBooksGet(w http.ResponseWriter, r *http.Request) {
 
 func PublishersPublisherIdDelete(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
-	i := findPublisher(id)
+	i := findPublisherPos(id)
 	if i == -1 {
 		//return
 		fmt.Println("Id Invalido")
@@ -310,7 +382,7 @@ func PublishersPublisherIdDelete(w http.ResponseWriter, r *http.Request) {
 // Obtiene el Publisher por ID
 func PublishersPublisherIdGet(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
-	i := findPublisher(id)
+	i := findPublisherPos(id)
 	if i == -1 {
 		return
 	}
