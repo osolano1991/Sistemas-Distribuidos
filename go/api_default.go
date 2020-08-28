@@ -125,32 +125,21 @@ func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	idTemp2 := path.Dir(idTemp)
 
 	id := path.Base(idTemp2)
-	fmt.Println("id ", id)
 	//Se busca el id del path en los autores
 	i := findAuthor(id)
-	fmt.Println("i: ", i)
 	if i != -1 {
 		//se parsea de int to String
 		s := strconv.Itoa(i)
-		fmt.Println("s: ", s)
 		//Si existe el author se obtiene el id del libro del author
 		idBook := findBookIdbyAuthor(s)
-		fmt.Println("idBook: ", idBook)
-		//s2, _ := strconv.Atoi(s)
 		if idBook != -1 {
 			//se parsea de int to String
 			p := strconv.Itoa(idBook)
-			fmt.Println("p: ", p)
 			//Se busca el Id del libro obtenido del author en Book
 			bookId := findBook(p)
-			fmt.Println("bookId: ", bookId)
-			//p2, _ := strconv.Atoi(p)
 			if bookId != -1 {
-				//fmt.Println("findBook invalido")
 				p2 := strconv.Itoa(idBook)
-				fmt.Println("p2: ", p2)
 				bookId2 := findBookPos(p2)
-				fmt.Println("bookId2: ", bookId2)
 				dataJson, _ := json.Marshal(books[bookId2])
 				w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 				w.Write(dataJson)
@@ -164,44 +153,9 @@ func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("idAuthor invalido")
 	}
-	/*
-		//se parsea de int to String
-		s := strconv.Itoa(i)
-
-		//Si existe el author se obtiene el id del libro del author
-		idBook := findBookIdbyAuthor(s)
-		if idBook == -1 {
-			//return
-			fmt.Println("idBook invalido")
-		}
-
-		//se parsea de int to String
-		p := strconv.Itoa(idBook)
-
-		//Se busca el Id del libro obtenido del author en Book
-		bookId := findBook(p)
-		if bookId == -1 {
-			fmt.Println("findBook invalido")
-		}
-		dataJson, _ := json.Marshal(books[i])*/
-
-	//json.NewEncoder(w).Encode(books)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	//w.Write(dataJson)
 	w.WriteHeader(http.StatusOK)
-
-	/*
-		id := path.Base(r.URL.Path)
-		i := findBook(id)
-		if i == -1 {
-			return
-		}
-		dataJson, _ := json.Marshal(books[i])
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.Write(dataJson)
-		w.WriteHeader(http.StatusOK)
-	*/
 }
 
 //DELETE AUTHOR
@@ -266,19 +220,40 @@ func AuthorsPost(w http.ResponseWriter, r *http.Request) {
 //  /books/1/authors/
 func BooksBookIdAuthorsGet(w http.ResponseWriter, r *http.Request) {
 
+	//Obtener el id del Author del path
 	idTemp := path.Dir(r.URL.Path)
 	idTemp2 := path.Dir(idTemp)
 
 	id := path.Base(idTemp2)
-
-	fmt.Println("URL -> ", id)
-
-	//fmt.Println("Glob -> ", id6)
-	i := findBook(id)
-	if i == -1 {
-		//return
-		fmt.Println("Id Invalido")
+	//Se busca el id del path en los autores
+	i := findAuthor(id)
+	if i != -1 {
+		//se parsea de int to String
+		s := strconv.Itoa(i)
+		//Si existe el author se obtiene el id del libro del author
+		idBook := findBookIdbyAuthor(s)
+		if idBook != -1 {
+			//se parsea de int to String
+			p := strconv.Itoa(idBook)
+			//Se busca el Id del libro obtenido del author en Book
+			bookId := findBook(p)
+			if bookId != -1 {
+				p2 := strconv.Itoa(idBook)
+				bookId2 := findBookPos(p2)
+				dataJson, _ := json.Marshal(books[bookId2])
+				w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+				w.Write(dataJson)
+				w.WriteHeader(http.StatusOK)
+			} else {
+				fmt.Println("findBook invalido")
+			}
+		} else {
+			fmt.Println("idBook invalido")
+		}
+	} else {
+		fmt.Println("idAuthor invalido")
 	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
