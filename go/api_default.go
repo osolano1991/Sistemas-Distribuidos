@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"net/http"
 	"path"
+	"strconv"
 )
 
 var books = []Book{
@@ -27,6 +28,8 @@ var authors = []Author{
 		Birth: "1990", Genere: "First"},
 	Author{AuthorId: "2", BookId: "2", Name: "MARIO", Nationality: "Costa Rica",
 		Birth: "1991", Genere: "Second"},
+	Author{AuthorId: "3", BookId: "2", Name: "LUIS", Nationality: "Costa Rica",
+		Birth: "1991", Genere: "Third"},
 }
 
 var publishers = []Publisher{
@@ -56,6 +59,16 @@ func findAuthor(x string) int {
 	return -1
 }
 
+//BUSCA POR ID AUTHOR
+func findBookbyAuthor(x string) int {
+	for i, author := range authors {
+		if x == author.BookId {
+			return i
+		}
+	}
+	return -1
+}
+
 //BUSCA POR ID PUBLISHER
 func findPublisher(x string) int {
 	for i, publishers := range publishers {
@@ -68,7 +81,7 @@ func findPublisher(x string) int {
 
 //  /authors/1/books/
 func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("TEST")
+	//fmt.Println("TEST")
 	//	id1 := path.Abs(r.URL.Path)
 	idTemp := path.Dir(r.URL.Path)
 	idTemp2 := path.Dir(idTemp)
@@ -84,10 +97,39 @@ func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Id Invalido")
 	}
 
-	json.NewEncoder(w).Encode(books)
+	//=================================
+	s := strconv.Itoa(i)
+	idBook := findBookbyAuthor(s)
+	if idBook == -1 {
+		//return
+		fmt.Println("idBook invalido")
+	}
+
+	p := strconv.Itoa(idBook)
+
+	bookId := findBook(p)
+	if bookId == -1 {
+		fmt.Println("findBook invalido")
+	}
+	dataJson, _ := json.Marshal(books[i])
+
+	//json.NewEncoder(w).Encode(books)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Write(dataJson)
 	w.WriteHeader(http.StatusOK)
+
+	/*
+		id := path.Base(r.URL.Path)
+		i := findBook(id)
+		if i == -1 {
+			return
+		}
+		dataJson, _ := json.Marshal(books[i])
+		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+		w.Write(dataJson)
+		w.WriteHeader(http.StatusOK)
+	*/
 }
 
 //DELETE AUTHOR
@@ -151,6 +193,20 @@ func AuthorsPost(w http.ResponseWriter, r *http.Request) {
 
 //  /books/1/authors/
 func BooksBookIdAuthorsGet(w http.ResponseWriter, r *http.Request) {
+
+	idTemp := path.Dir(r.URL.Path)
+	idTemp2 := path.Dir(idTemp)
+
+	id := path.Base(idTemp2)
+
+	fmt.Println("URL -> ", id)
+
+	//fmt.Println("Glob -> ", id6)
+	i := findBook(id)
+	if i == -1 {
+		//return
+		fmt.Println("Id Invalido")
+	}
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
