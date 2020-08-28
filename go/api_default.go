@@ -32,6 +32,8 @@ var authors = []Author{
 		Birth: "1991", Genere: "Second"},
 	Author{AuthorId: "3", BookId: "2", Name: "LUIS", Nationality: "Costa Rica",
 		Birth: "1991", Genere: "Third"},
+	Author{AuthorId: "4", BookId: "2", Name: "JOUSER", Nationality: "FRANCES",
+		Birth: "1980", Genere: "Fourth"},
 }
 
 var publishers = []Publisher{
@@ -85,11 +87,14 @@ func findAuthor(x string) int {
 	return -1
 }
 
-//BUSCA POR ID AUTHOR
+//BUSCA POR ID Book
+//   /books/1/authors/
 func findAuthorIdbyBook(x string) int {
-	for _, book := range books {
-		if x == book.BookId {
-			s2, _ := strconv.Atoi(book.BookId)
+	for _, author := range authors {
+		if x == author.BookId {
+			fmt.Println("Author-BookId: ", author.BookId)
+			fmt.Println("Author-AuthorId: ", author.AuthorId)
+			s2, _ := strconv.Atoi(author.AuthorId)
 			return s2
 		}
 	}
@@ -97,9 +102,11 @@ func findAuthorIdbyBook(x string) int {
 }
 
 //BUSCA POR ID AUTHOR
+//   /authors/1/books/
 func findBookIdbyAuthor(x string) int {
 	for _, author := range authors {
 		if x == author.AuthorId {
+			//	fmt.Println("BookId-Author: ", author.AuthorId)
 			s2, _ := strconv.Atoi(author.BookId)
 			return s2
 		}
@@ -231,23 +238,24 @@ func AuthorsPost(w http.ResponseWriter, r *http.Request) {
 //  /books/1/authors/
 func BooksBookIdAuthorsGet(w http.ResponseWriter, r *http.Request) {
 
-	//Obtener el id del Author del path
+	//Obtener el id del Libro del path
 	idTemp := path.Dir(r.URL.Path)
 	idTemp2 := path.Dir(idTemp)
 
 	id := path.Base(idTemp2)
-	//Se busca el id del path en los autores
+	//Se busca el id del path en los libros
 	i := findBook(id)
 	if i != -1 {
 		//se parsea de int to String
 		s := strconv.Itoa(i)
-		//Si existe el author se obtiene el id del libro del author
+		//Si existe el libro se obtiene el id del author del libro
 		//idBook := findBookIdbyAuthor(s)
 		idBook := findAuthorIdbyBook(s)
+		fmt.Println("Id Author", idBook)
 		if idBook != -1 {
 			//se parsea de int to String
 			p := strconv.Itoa(idBook)
-			//Se busca el Id del libro obtenido del author en Book
+			//Se busca el Id del authot obtenido del libro en Author
 			bookId := findAuthor(p)
 			if bookId != -1 {
 				p2 := strconv.Itoa(bookId)
