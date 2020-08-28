@@ -70,23 +70,15 @@ func findPublisher(x string) int {
 func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("TEST")
 	//	id1 := path.Abs(r.URL.Path)
-	id2 := path.Base(r.URL.Path)
-	id3 := path.Clean(r.URL.Path)
-	id4 := path.Dir(r.URL.Path)
-	id5 := path.Ext(r.URL.Path)
-	//id6 := path.Glob(r.URL.Path)
+	idTemp := path.Dir(r.URL.Path)
+	idTemp2 := path.Dir(idTemp)
 
-	//fmt.Println("Abs -> ", id1)
-	fmt.Println("Base -> ", id2)
-	fmt.Println("Clean -> ", id3)
-	fmt.Println("DIR -> ", id4)
-	fmt.Println("Ext -> ", id5)
+	id := path.Base(idTemp2)
 
-	fmt.Println(path.Match("abc", "abc"))
-	fmt.Println(path.Match("[a-z]*", "123"))
-	fmt.Println(path.Match("a*/c", "a/c/b"))
+	fmt.Println("URL -> ", id)
+
 	//fmt.Println("Glob -> ", id6)
-	i := findAuthor(id2)
+	i := findAuthor(id)
 	if i == -1 {
 		//return
 		fmt.Println("Id Invalido")
