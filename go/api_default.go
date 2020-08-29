@@ -92,8 +92,8 @@ func findAuthor(x string) int {
 func findAuthorIdbyBook(x string) int {
 	for _, author := range authors {
 		if x == author.BookId {
-			fmt.Println("Author-BookId: ", author.BookId)
-			fmt.Println("Author-AuthorId: ", author.AuthorId)
+			//fmt.Println("Author-BookId: ", author.BookId)
+			//fmt.Println("Author-AuthorId: ", author.AuthorId)
 			s2, _ := strconv.Atoi(author.AuthorId)
 			return s2
 		}
@@ -249,9 +249,32 @@ func BooksBookIdAuthorsGet(w http.ResponseWriter, r *http.Request) {
 		//se parsea de int to String
 		s := strconv.Itoa(i)
 		//Si existe el libro se obtiene el id del author del libro
-		//idBook := findBookIdbyAuthor(s)
+
+		//for _, author := range authors {}
+
 		idBook := findAuthorIdbyBook(s)
-		fmt.Println("Id Author", idBook)
+		//	t := strconv.Itoa(idBook)
+
+		for i, author := range authors {
+			if s == author.BookId {
+				fmt.Println("Author-AuthorId: ", author.AuthorId)
+				p := strconv.Itoa(idBook)
+				//Se busca el Id del authot obtenido del libro en Author
+				bookId := findAuthor(p)
+				if bookId != -1 {
+					//	p2 := strconv.Itoa(bookId)
+					//	bookId2 := findAuthorPos(p2)
+					dataJson, _ := json.Marshal(authors[i])
+					w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+					w.Write(dataJson)
+					w.WriteHeader(http.StatusOK)
+				} else {
+					fmt.Println("findBook invalido")
+				}
+			}
+		}
+
+		/*fmt.Println("Id Author", idBook)
 		if idBook != -1 {
 			//se parsea de int to String
 			p := strconv.Itoa(idBook)
@@ -269,7 +292,7 @@ func BooksBookIdAuthorsGet(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			fmt.Println("idBook invalido")
-		}
+		}*/
 	} else {
 		fmt.Println("idAuthor invalido")
 	}
