@@ -168,7 +168,6 @@ func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	//Obtener el id del Author del path
 	idTemp := path.Dir(r.URL.Path)
 	idTemp2 := path.Dir(idTemp)
-
 	id := path.Base(idTemp2)
 	//Se busca el id del path en los autores
 	i := findAuthor(id)
@@ -198,7 +197,6 @@ func AuthorsAuthorIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("idAuthor invalido")
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
@@ -231,7 +229,6 @@ func AuthorsAuthorIdGet(w http.ResponseWriter, r *http.Request) {
 //PUT AUTHOR
 func AuthorsAuthorIdPut(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
-
 	for index, item := range authors {
 		if item.AuthorId == id {
 			authors = append(authors[:index], authors[index+1:]...)
@@ -243,7 +240,6 @@ func AuthorsAuthorIdPut(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
@@ -263,11 +259,9 @@ func AuthorsPost(w http.ResponseWriter, r *http.Request) {
 
 //  /books/1/authors/
 func BooksBookIdAuthorsGet(w http.ResponseWriter, r *http.Request) {
-
 	//Obtener el id del Libro del path
 	idTemp := path.Dir(r.URL.Path)
 	idTemp2 := path.Dir(idTemp)
-
 	id := path.Base(idTemp2)
 	//Se busca el id del path en los libros
 	i := findBook(id)
@@ -337,7 +331,6 @@ func BooksBookIdPublishersGet(w http.ResponseWriter, r *http.Request) {
 	//Obtener el id del Author del path
 	idTemp := path.Dir(r.URL.Path)
 	idTemp2 := path.Dir(idTemp)
-
 	id := path.Base(idTemp2)
 	//Se busca el id del path en los autores
 	i := findBook(id)
@@ -367,7 +360,6 @@ func BooksBookIdPublishersGet(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("idAuthor invalido")
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
@@ -375,7 +367,6 @@ func BooksBookIdPublishersGet(w http.ResponseWriter, r *http.Request) {
 //PUT BOOK
 func BooksBookIdPut(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
-
 	for index, item := range books {
 		if item.BookId == id {
 			books = append(books[:index], books[index+1:]...)
@@ -387,7 +378,6 @@ func BooksBookIdPut(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
@@ -423,7 +413,6 @@ func PublishersPublisherIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	//Obtener el id del Libro del path
 	idTemp := path.Dir(r.URL.Path)
 	idTemp2 := path.Dir(idTemp)
-
 	id := path.Base(idTemp2)
 	//Se busca el id del path en los libros
 	i := findPublisher(id)
@@ -431,10 +420,8 @@ func PublishersPublisherIdBooksGet(w http.ResponseWriter, r *http.Request) {
 		//se parsea de int to String
 		s := strconv.Itoa(i)
 		//Si existe el libro se obtiene el id del author del libro
-
 		idBook := findBookIdbyPublisher(s)
 		//	t := strconv.Itoa(idBook)
-
 		for i, book := range books {
 			if s == book.PublisherId {
 				fmt.Println("Author-AuthorId: ", book.PublisherId)
@@ -456,7 +443,6 @@ func PublishersPublisherIdBooksGet(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("idAuthor invalido")
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
@@ -488,7 +474,6 @@ func PublishersPublisherIdGet(w http.ResponseWriter, r *http.Request) {
 //PUT PUBLISHERS
 func PublishersPublisherIdPut(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
-
 	for index, item := range publishers {
 		if item.PublisherId == id {
 			publishers = append(publishers[:index], publishers[index+1:]...)
@@ -500,7 +485,6 @@ func PublishersPublisherIdPut(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
