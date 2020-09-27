@@ -176,12 +176,12 @@ func decodeGetAuthorByIdRequest(_ context.Context, r *http.Request) (interface{}
     }
     return req, nil
 }
-func decodeDeleteBookRequest(_ context.Context, r *http.Request) (interface{}, error) {
+func decodeDeleteAuthorRequest(_ context.Context, r *http.Request) (interface{}, error) {
     fmt.Println("-------->>>> Into Delete Decoding")
-    var req DeleteBookRequest
+    var req DeleteAuthorRequest
     vars := mux.Vars(r)
-    req = DeleteBookRequest{
-        Bookid: vars["bookid"],
+    req = DeleteAuthorRequest{
+        Authorid: vars["authorid"],
     }
     return req, nil
 }
