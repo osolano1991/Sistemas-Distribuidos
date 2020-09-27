@@ -153,7 +153,7 @@ func makeDeleteAuthorEndpoint(s AuthorService) endpoint.Endpoint {
 func makeUpdateAuthorendpoint(s AuthorService) endpoint.Endpoint {
     return func(ctx context.Context, request interface{}) (interface{}, error) {
         req := request.(UpdateAuthorRequest)
-        msg, err := s.UpdateAuthor(ctx, req.book)
+        msg, err := s.UpdateAuthor(ctx, req.author)
         return msg, err
     }
 }
@@ -161,7 +161,7 @@ func makeUpdateAuthorendpoint(s AuthorService) endpoint.Endpoint {
 func decodeCreateAuthorRequest(_ context.Context, r *http.Request) (interface{}, error) {
     var req CreateAuthorRequest
     fmt.Println("-------->>>>into Decoding")
-    if err := json.NewDecoder(r.Body).Decode(&req.book); err != nil {
+    if err := json.NewDecoder(r.Body).Decode(&req.author); err != nil {
         return nil, err
     }
     return req, nil

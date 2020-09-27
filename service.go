@@ -167,11 +167,11 @@ func (s authorservice) DeleteAuthor(ctx context.Context, id string) (string, err
     authors = authors[:len(authors)-1]
     return msg, nil
 }
-func (s bookservice) UpdateAuthor(ctx context.Context, author Author) (string, error) {
+func (s authorservice) UpdateAuthor(ctx context.Context, author Author) (string, error) {
     var empty = ""
     var err error
     var msg = "success"
-    i := find(book.AuthorId)
+    i := find(author.AuthorId)
     if i == -1 {
         return empty, err
     }
