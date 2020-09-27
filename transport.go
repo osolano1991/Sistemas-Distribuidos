@@ -267,7 +267,7 @@ func makeDeletePublisherEndpoint(s PublisherService) endpoint.Endpoint {
 func makeUpdatePublisherendpoint(s PublisherService) endpoint.Endpoint {
     return func(ctx context.Context, request interface{}) (interface{}, error) {
         req := request.(UpdatePublisherRequest)
-        msg, err := s.UpdateUpdatePublisher(ctx, req.publisher)
+        msg, err := s.UpdatePublisher(ctx, req.publisher)
         return msg, err
     }
 }
