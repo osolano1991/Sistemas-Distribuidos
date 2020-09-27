@@ -69,19 +69,54 @@ var svcAuthor AuthorService
         decodeUpdateAuthorRequest,
         encodeResponseAuthor,
     )
-  //  http.Handle("/", r)
-    http.Handle("/author", CreateAuthorHandler)
-    http.Handle("/author/update", UpdateAuthorHandler)
-    r.Handle("/author/{authorid}", GetByAuthorIdHandler).Methods("GET")
-    r.Handle("/author/{authorid}", DeleteAuthorHandler).Methods("DELETE")
+   
+    
+//=============================================================================================================
+//                                                     PUBLISHER
+//=============================================================================================================
+var svcPublisher PublisherService
+    svcPublisher = NewServicePublisher(logger)
 
+    // svcPublisher = loggingMiddleware{logger, svcPublisher}
+    // svcPublisher = instrumentingMiddleware{requestCount, requestLatency, countResult, svcPublisher}
+
+    CreatePublisherHandler := httptransport.NewServer(
+        makeCreatePublisherEndpoint(svcPublisher),
+        decodeCreatePublisherRequest,
+        encodeResponsePublisher,
+    )
+    GetBypublisheridHandler := httptransport.NewServer(
+        makeGetPublisherByIdEndpoint(svcPublisher),
+        decodeGetPublisherByIdRequest,
+        encodeResponsePublisher,
+    )
+    DeletePublisherHandler := httptransport.NewServer(
+        makeDeletePublisherEndpoint(svcPublisher),
+        decodeDeletePublisherRequest,
+        encodeResponsePublisher,
+    )
+    UpdatePublisherHandler := httptransport.NewServer(
+        makeUpdatePublisherendpoint(svcPublisher),
+        decodeUpdatePublisherRequest,
+        encodeResponsePublisher,
+    )
+    
     http.Handle("/", r)
     http.Handle("/book", CreateBookHandler)
     http.Handle("/book/update", UpdateBookHandler)
     r.Handle("/book/{bookid}", GetByBookIdHandler).Methods("GET")
     r.Handle("/book/{bookid}", DeleteBookHandler).Methods("DELETE")
+    
+    http.Handle("/author", CreateAuthorHandler)
+    http.Handle("/author/update", UpdateAuthorHandler)
+    r.Handle("/author/{authorid}", GetByAuthorIdHandler).Methods("GET")
+    r.Handle("/author/{authorid}", DeleteAuthorHandler).Methods("DELETE")    
+    
+    http.Handle("/publisher", CreatePublisherHandler)
+    http.Handle("/publisher/update", UpdatePublisherHandler)
+    r.Handle("/publisher/{publisherid}", GetBypublisheridHandler).Methods("GET")
+    r.Handle("/publisher/{publisherid}", DeletePublisherHandler).Methods("DELETE")
 
-//=============================================================================================================
     // http.Handle("/metrics", promhttp.Handler())
     logger.Log("msg", "HTTP", "addr", ":"+os.Getenv("PORT"))
     logger.Log("err", http.ListenAndServe(":"+os.Getenv("PORT"), nil))
