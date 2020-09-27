@@ -188,7 +188,7 @@ func decodeDeleteAuthorRequest(_ context.Context, r *http.Request) (interface{},
 func decodeUpdateAuthorRequest(_ context.Context, r *http.Request) (interface{}, error) {
     fmt.Println("-------->>>> Into Update Decoding")
     var req UpdateAuthorRequest
-    if err := json.NewDecoder(r.Author).Decode(&req.author); err != nil {
+    if err := json.NewDecoder(r.Body).Decode(&req.author); err != nil {
         return nil, err
     }
     return req, nil
