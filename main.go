@@ -48,7 +48,7 @@ func main() {
 //                                                     Author
 //=============================================================================================================
 var svcAuthor AuthorService
-    svcAuthor = NewService(logger)
+    svcAuthor = NewServiceAuthor(logger)
 
     // svcAuthor = loggingMiddleware{logger, svcAuthor}
     // svcAuthor = instrumentingMiddleware{requestCount, requestLatency, countResult, svcAuthor}

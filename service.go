@@ -132,7 +132,7 @@ func find(x string) int {
     return -1
 }
 
-func NewService(logger log.Logger) AuthorService {
+func NewServiceAuthor(logger log.Logger) AuthorService {
     return &authorservice{
         logger: logger,
     }
