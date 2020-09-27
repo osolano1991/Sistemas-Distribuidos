@@ -194,7 +194,7 @@ func decodeUpdateAuthorRequest(_ context.Context, r *http.Request) (interface{},
     return req, nil
 }
 
-func encodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
+func encodeResponseAuthor(_ context.Context, w http.ResponseWriter, response interface{}) error {
     w.Header().Set("Content-Type", "application/json; charset=utf-8")
     fmt.Println("into Encoding <<<<<<----------------")
     return json.NewEncoder(w).Encode(response)

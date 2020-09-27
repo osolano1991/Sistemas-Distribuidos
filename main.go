@@ -56,22 +56,22 @@ var svcAuthor AuthorService
     CreateAuthorHandler := httptransport.NewServer(
         makeCreateAuthorEndpoint(svcAuthor),
         decodeCreateAuthorRequest,
-        encodeResponse,
+        encodeResponseAuthor,
     )
     GetByAuthorIdHandler := httptransport.NewServer(
         makeGetAuthorByIdEndpoint(svcAuthor),
         decodeGetAuthorByIdRequest,
-        encodeResponse,
+        encodeResponseAuthor,
     )
     DeleteAuthorHandler := httptransport.NewServer(
         makeDeleteAuthorEndpoint(svcAuthor),
         decodeDeleteAuthorRequest,
-        encodeResponse,
+        encodeResponseAuthor,
     )
     UpdateAuthorHandler := httptransport.NewServer(
         makeUpdateAuthorendpoint(svcAuthor),
         decodeUpdateAuthorRequest,
-        encodeResponse,
+        encodeResponseAuthor,
     )
     http.Handle("/", r)
     http.Handle("/author", CreateAuthorHandler)
