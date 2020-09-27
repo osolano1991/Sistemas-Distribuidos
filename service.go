@@ -123,7 +123,7 @@ var authors = []Author{
         Nationality: "Espanol", Birth: "agosto 2000", Genere: "Masculino"},
 }
 
-func find(x string) int {
+func findAuthor(x string) int {
     for i, author := range authors {
         if x == author.AuthorId {
             return i
@@ -148,7 +148,7 @@ func (s authorservice) GetAuthorById(ctx context.Context, id string) (interface{
     var err error
     var author interface{}
     var empty interface{}
-    i := find(id)
+    i := findAuthor(id)
     if i == -1 {
         return empty, err
     }
@@ -158,7 +158,7 @@ func (s authorservice) GetAuthorById(ctx context.Context, id string) (interface{
 func (s authorservice) DeleteAuthor(ctx context.Context, id string) (string, error) {
     var err error
     msg := ""
-    i := find(id)
+    i := findAuthor(id)
     if i == -1 {
         return "", err
     }
@@ -171,7 +171,7 @@ func (s authorservice) UpdateAuthor(ctx context.Context, author Author) (string,
     var empty = ""
     var err error
     var msg = "success"
-    i := find(author.AuthorId)
+    i := findAuthor(author.AuthorId)
     if i == -1 {
         return empty, err
     }
