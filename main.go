@@ -47,29 +47,29 @@ func main() {
 //=============================================================================================================
 //                                                     Author
 //=============================================================================================================
-var svc AuthorService
-    svc = NewService(logger)
+var svcAuthor AuthorService
+    svcAuthor = NewService(logger)
 
-    // svc = loggingMiddleware{logger, svc}
-    // svc = instrumentingMiddleware{requestCount, requestLatency, countResult, svc}
+    // svcAuthor = loggingMiddleware{logger, svcAuthor}
+    // svcAuthor = instrumentingMiddleware{requestCount, requestLatency, countResult, svcAuthor}
 
     CreateAuthorHandler := httptransport.NewServer(
-        makeCreateAuthorEndpoint(svc),
+        makeCreateAuthorEndpoint(svcAuthor),
         decodeCreateAuthorRequest,
         encodeResponse,
     )
     GetByAuthorIdHandler := httptransport.NewServer(
-        makeGetAuthorByIdEndpoint(svc),
+        makeGetAuthorByIdEndpoint(svcAuthor),
         decodeGetAuthorByIdRequest,
         encodeResponse,
     )
     DeleteAuthorHandler := httptransport.NewServer(
-        makeDeleteAuthorEndpoint(svc),
+        makeDeleteAuthorEndpoint(svcAuthor),
         decodeDeleteAuthorRequest,
         encodeResponse,
     )
     UpdateAuthorHandler := httptransport.NewServer(
-        makeUpdateAuthorendpoint(svc),
+        makeUpdateAuthorendpoint(svcAuthor),
         decodeUpdateAuthorRequest,
         encodeResponse,
     )
