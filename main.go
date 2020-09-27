@@ -39,11 +39,7 @@ func main() {
         decodeUpdateBookRequest,
         encodeResponse,
     )
-    http.Handle("/", r)
-    http.Handle("/book", CreateBookHandler)
-    http.Handle("/book/update", UpdateBookHandler)
-    r.Handle("/book/{bookid}", GetByBookIdHandler).Methods("GET")
-    r.Handle("/book/{bookid}", DeleteBookHandler).Methods("DELETE")
+    
 //=============================================================================================================
 //                                                     Author
 //=============================================================================================================
@@ -73,13 +69,17 @@ var svcAuthor AuthorService
         decodeUpdateAuthorRequest,
         encodeResponseAuthor,
     )
-    http.Handle("/", r)
+  //  http.Handle("/", r)
     http.Handle("/author", CreateAuthorHandler)
     http.Handle("/author/update", UpdateAuthorHandler)
     r.Handle("/author/{authorid}", GetByAuthorIdHandler).Methods("GET")
     r.Handle("/author/{authorid}", DeleteAuthorHandler).Methods("DELETE")
 
-
+    http.Handle("/", r)
+    http.Handle("/book", CreateBookHandler)
+    http.Handle("/book/update", UpdateBookHandler)
+    r.Handle("/book/{bookid}", GetByBookIdHandler).Methods("GET")
+    r.Handle("/book/{bookid}", DeleteBookHandler).Methods("DELETE")
 
 //=============================================================================================================
     // http.Handle("/metrics", promhttp.Handler())
