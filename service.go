@@ -29,6 +29,26 @@ type BookService interface {
     DeleteBook(ctx context.Context, id string) (string, error)
 }
 
+type Author struct {
+    AuthorId string `json:"authorId,omitempty"`
+	BookId string `json:"bookId,omitempty"`
+	Name string `json:"name,omitempty"`
+	Nationality string `json:"nationality,omitempty"`
+	Birth string `json:"birth,omitempty"`
+	Genere string `json:"genere,omitempty"`
+}
+type authorservice struct {
+    logger log.Logger
+}
+
+// Service describes the Author service.
+type AuthorService interface {
+    CreateAuthor(ctx context.Context, author Author) (string, error)
+    GetAuthorById(ctx context.Context, id string) (interface{}, error)
+    UpdateAuthor(ctx context.Context, author Author) (string, error)
+    DeleteAuthor(ctx context.Context, id string) (string, error)
+}
+
 var books = []Book{
     Book{BookId: "Book1", Title: "Operating System Concepts", Edition: "9th",
         Copyright: "2012", Language: "ENGLISH", Pages: "976",
@@ -134,26 +154,9 @@ func (s bookservice) UpdateBook(ctx context.Context, book Book) (string, error) 
 //==========================================================================================================================================================
 //                                                                          AUTHORS
 //==========================================================================================================================================================
-type Author struct {
-    AuthorId string `json:"authorId,omitempty"`
-	BookId string `json:"bookId,omitempty"`
-	Name string `json:"name,omitempty"`
-	Nationality string `json:"nationality,omitempty"`
-	Birth string `json:"birth,omitempty"`
-	Genere string `json:"genere,omitempty"`
-}
 
-type authorservice struct {
-    logger log.Logger
-}
 
-// Service describes the Author service.
-type AuthorService interface {
-    CreateAuthor(ctx context.Context, author Author) (string, error)
-    GetAuthorById(ctx context.Context, id string) (interface{}, error)
-    UpdateAuthor(ctx context.Context, author Author) (string, error)
-    DeleteAuthor(ctx context.Context, id string) (string, error)
-}
+
 
 
 
