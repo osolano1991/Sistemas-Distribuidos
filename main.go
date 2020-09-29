@@ -15,6 +15,9 @@ func main() {
 
     var svc BookService
     svc = NewService(logger)
+    
+    var svcAuthor AuthorService
+    svcAuthor = NewServiceAuthor(logger)
 
     // svc = loggingMiddleware{logger, svc}
     // svc = instrumentingMiddleware{requestCount, requestLatency, countResult, svc}
@@ -32,7 +35,7 @@ func main() {
     
     ///books/1/authors/
     GetByBookIdAuthorHandler := httptransport.NewServer(
-        makeGetBooksBookIdAuthorsEndpoint(svc),
+        makeGetBooksBookIdAuthorsEndpoint(svcAuthor),
         decodeGetBookByIdRequest,
         encodeResponse,
     )
@@ -50,8 +53,8 @@ func main() {
 //=============================================================================================================
 //                                                     Author
 //=============================================================================================================
-var svcAuthor AuthorService
-    svcAuthor = NewServiceAuthor(logger)
+//var svcAuthor AuthorService
+//    svcAuthor = NewServiceAuthor(logger)
 
     // svcAuthor = loggingMiddleware{logger, svcAuthor}
     // svcAuthor = instrumentingMiddleware{requestCount, requestLatency, countResult, svcAuthor}
