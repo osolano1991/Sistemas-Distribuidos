@@ -24,6 +24,7 @@ type bookservice struct {
 type BookService interface {
     CreateBook(ctx context.Context, book Book) (string, error)
     GetBookById(ctx context.Context, id string) (interface{}, error)
+    BooksBookIdAuthorsGet(ctx context.Context, id string) (interface{}, error)
     UpdateBook(ctx context.Context, book Book) (string, error)
     DeleteBook(ctx context.Context, id string) (string, error)
 }
