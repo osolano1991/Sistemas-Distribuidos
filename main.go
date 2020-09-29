@@ -102,20 +102,23 @@ var svcPublisher PublisherService
     )
     
     http.Handle("/", r)
-    http.Handle("/book", CreateBookHandler)
-    http.Handle("/book/update", UpdateBookHandler)
-    r.Handle("/book/{bookid}", GetByBookIdHandler).Methods("GET")
-    r.Handle("/book/{bookid}/authors", GetByBookIdHandler).Methods("GET")
-    r.Handle("/book/{bookid}", DeleteBookHandler).Methods("DELETE")
+    http.Handle("/books", CreateBookHandler)
+    http.Handle("/books/update", UpdateBookHandler)
+    r.Handle("/books/{bookid}", GetByBookIdHandler).Methods("GET")
+    r.Handle("/books/{bookid}/authors", GetByBookIdHandler).Methods("GET")
+    r.Handle("/books/{bookid}/publishers", GetByBookIdHandler).Methods("GET")
+    r.Handle("/books/{bookid}", DeleteBookHandler).Methods("DELETE")
     
     http.Handle("/author", CreateAuthorHandler)
     http.Handle("/author/update", UpdateAuthorHandler)
     r.Handle("/author/{authorid}", GetByAuthorIdHandler).Methods("GET")
+    r.Handle("/author/{authorid}/books", GetByAuthorIdHandler).Methods("GET")
     r.Handle("/author/{authorid}", DeleteAuthorHandler).Methods("DELETE")    
     
     http.Handle("/publisher", CreatePublisherHandler)
     http.Handle("/publisher/update", UpdatePublisherHandler)
     r.Handle("/publisher/{publisherid}", GetBypublisheridHandler).Methods("GET")
+    r.Handle("/publisher/{publisherid}/books", GetBypublisheridHandler).Methods("GET")
     r.Handle("/publisher/{publisherid}", DeletePublisherHandler).Methods("DELETE")
 
     // http.Handle("/metrics", promhttp.Handler())
