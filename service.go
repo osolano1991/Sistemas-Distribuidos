@@ -6,14 +6,15 @@ import (
 )
 
 type Book struct {
-    BookId    string `json:"bookId,omitempty"`
-    Title     string `json:"title,omitempty"`
-    Edition   string `json:"edition,omitempty"`
-    Copyright string `json:"copyright,omitempty"`
-    Language  string `json:"language,omitempty"`
-    Pages     string `json:"pages,omitempty"`
-    Author    string `json:"author,omitempty"`
-    Publisher string `json:"publisher,omitempty"`
+    BookId          string `json:"bookId,omitempty"`
+    PublisherId     string `json:"publisherId,omitempty"`
+    Title           string `json:"title,omitempty"`
+   // Edition         string `json:"edition,omitempty"`
+    Copyright       string `json:"copyright,omitempty"`
+   // Language        string `json:"language,omitempty"`
+    Pages           string `json:"pages,omitempty"`
+  //  Author          string `json:"author,omitempty"`
+   // Publisher       string `json:"publisher,omitempty"`
 }
 
 type bookservice struct {
@@ -29,14 +30,14 @@ type BookService interface {
 }
 
 var books = []Book{
-    Book{BookId: "Book1", Title: "Operating System Concepts", Edition: "9th",
+   /* Book{BookId: "Book1", Title: "Operating System Concepts", Edition: "9th",
         Copyright: "2012", Language: "ENGLISH", Pages: "976",
         Author: "Abraham Silberschatz", Publisher: "John Wiley & Sons"},
     Book{BookId: "Book3", Title: "Computer Networks", Edition: "5th",
         Copyright: "2010", Language: "ENGLISH", Pages: "960",
         Author: "Andrew S. Tanenbaum", Publisher: "Andrew S. Tanenbaum"},
-        
-    /*
+     */   
+    
     Book{BookId: "1", PublisherId: "1", Title: "Libro 1",
 		Copyright: "2012", Edition: "5th", Pages: "976"},
 	Book{BookId: "2", PublisherId: "1", Title: "Libro 2",
@@ -45,7 +46,7 @@ var books = []Book{
 		Copyright: "2010", Edition: "9th", Pages: "1500"},
 	Book{BookId: "4", PublisherId: "2", Title: "Libro 4",
 		Copyright: "2010", Edition: "11th", Pages: "722"},
-    */
+    
 }
 
 func find(x string) int {
