@@ -105,6 +105,7 @@ var svcPublisher PublisherService
     http.Handle("/book", CreateBookHandler)
     http.Handle("/book/update", UpdateBookHandler)
     r.Handle("/book/{bookid}", GetByBookIdHandler).Methods("GET")
+    r.Handle("/book/{bookid}/authors", GetByBookIdHandler).Methods("GET")
     r.Handle("/book/{bookid}", DeleteBookHandler).Methods("DELETE")
     
     http.Handle("/author", CreateAuthorHandler)
