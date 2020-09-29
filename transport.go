@@ -28,7 +28,8 @@ func makeGetBookByIdEndpoint(s BookService) endpoint.Endpoint {
 }
 //BooksBookIdAuthorsGet
 //  /books/1/authors/
-func makeGetBooksBookIdAuthorsEndpoint(s BookService) endpoint.Endpoint {
+//func makeGetBooksBookIdAuthorsEndpoint(s BookService) endpoint.Endpoint {
+func makeGetBooksBookIdAuthorsEndpoint(s AuthorService) endpoint.Endpoint {
     /*return func(ctx context.Context, request interface{}) (interface{}, error) {
         req := request.(GetBookByIdRequest)
         bookDetails, err := s.GetBookById(ctx, req.Id)
