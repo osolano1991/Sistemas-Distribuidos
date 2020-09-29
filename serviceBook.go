@@ -38,6 +38,9 @@ var books = []Book{
     Book{BookId: "2", Title: "Computer Networks", Edition: "5th",
         Copyright: "2010", Language: "ENGLISH", Pages: "960",
         AuthorId: "2", PublisherId: "2"},
+    Book{BookId: "3", Title: "OSCAR", Edition: "5th",
+        Copyright: "2010", Language: "ENGLISH", Pages: "960",
+        AuthorId: "2", PublisherId: "2"},
 }
 
 func find(x string) int {
