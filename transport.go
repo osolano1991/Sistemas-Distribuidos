@@ -26,6 +26,20 @@ func makeGetBookByIdEndpoint(s BookService) endpoint.Endpoint {
         return GetBookByIdResponse{Book: bookDetails, Err: ""}, nil
     }
 }
+//BooksBookIdAuthorsGet
+//  /books/1/authors/
+func makeGetBooksBookIdAuthorsEndpoint(s BookService) endpoint.Endpoint {
+    return func(ctx context.Context, request interface{}) (interface{}, error) {
+        req := request.(GetBookByIdRequest)
+        bookDetails, err := s.GetBookById(ctx, req.Id)
+        if err != nil {
+            return GetBookByIdResponse{Book: bookDetails, Err: "Id not found"}, nil
+        }
+        return GetBookByIdResponse{Book: bookDetails, Err: ""}, nil
+    }
+}
+
+
 func makeDeleteBookEndpoint(s BookService) endpoint.Endpoint {
     return func(ctx context.Context, request interface{}) (interface{}, error) {
         req := request.(DeleteBookRequest)

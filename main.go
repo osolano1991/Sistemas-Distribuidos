@@ -29,6 +29,13 @@ func main() {
         decodeGetBookByIdRequest,
         encodeResponse,
     )
+    
+    ///books/1/authors/
+    GetByBookIdAuthorHandler := httptransport.NewServer(
+        makeGetBooksBookIdAuthorsEndpoint(svc),
+        decodeGetBookByIdRequest,
+        encodeResponse,
+    )
     DeleteBookHandler := httptransport.NewServer(
         makeDeleteBookEndpoint(svc),
         decodeDeleteBookRequest,
@@ -100,11 +107,13 @@ var svcPublisher PublisherService
         decodeUpdatePublisherRequest,
         encodeResponsePublisher,
     )
-    
+  //  /books/1/authors/
+  
     http.Handle("/", r)
     http.Handle("/book", CreateBookHandler)
     http.Handle("/book/update", UpdateBookHandler)
     r.Handle("/book/{bookid}", GetByBookIdHandler).Methods("GET")
+    r.Handle("/book/{bookid}/authors", GetByBookIdAuthorHandler).Methods("GET")
     r.Handle("/book/{bookid}", DeleteBookHandler).Methods("DELETE")
     
     http.Handle("/author", CreateAuthorHandler)
