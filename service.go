@@ -24,29 +24,8 @@ type bookservice struct {
 type BookService interface {
     CreateBook(ctx context.Context, book Book) (string, error)
     GetBookById(ctx context.Context, id string) (interface{}, error)
-    BooksBookIdAuthorsGet(ctx context.Context, id string) (interface{}, error)
     UpdateBook(ctx context.Context, book Book) (string, error)
     DeleteBook(ctx context.Context, id string) (string, error)
-}
-
-type Author struct {
-    AuthorId string `json:"authorId,omitempty"`
-	BookId string `json:"bookId,omitempty"`
-	Name string `json:"name,omitempty"`
-	Nationality string `json:"nationality,omitempty"`
-	Birth string `json:"birth,omitempty"`
-	Genere string `json:"genere,omitempty"`
-}
-type authorservice struct {
-    logger log.Logger
-}
-
-// Service describes the Author service.
-type AuthorService interface {
-    CreateAuthor(ctx context.Context, author Author) (string, error)
-    GetAuthorById(ctx context.Context, id string) (interface{}, error)
-    UpdateAuthor(ctx context.Context, author Author) (string, error)
-    DeleteAuthor(ctx context.Context, id string) (string, error)
 }
 
 var books = []Book{
@@ -58,35 +37,9 @@ var books = []Book{
         Author: "Andrew S. Tanenbaum", Publisher: "Andrew S. Tanenbaum"},
 }
 
-var authors = []Author{
-    Author{AuthorId: "1", BookId: "1", Name: "Author 1",
-        Nationality: "Costa Rica", Birth: "julio 1991", Genere: "Masculino"},
-    Author{AuthorId: "2", BookId: "2", Name: "Author 2",
-        Nationality: "Espanol", Birth: "agosto 2000", Genere: "Masculino"},
-}
-
-var publishers = []Publisher{
-    Publisher{PublisherId: "1", Name: "Yensie", Country: "Inglaterra", Founded: "Costa Rica",
-		Genere: "First"},
-	Publisher{PublisherId: "2", Name: "Tatiana", Country: "Italia", Founded: "Costa Rica",
-		Genere: "Second"},
-	Publisher{PublisherId: "3", Name: "ANGIE", Country: "CHINA", Founded: "CHINA",
-		Genere: "Third"},
-}
-
 func findBook(x string) int {
     for i, book := range books {
         if x == book.BookId {
-            return i
-        }
-    }
-    return -1
-}
-
-//  /books/1/authors/
-func findAuthorIdbyBook(x string) int {
-    for i, author := range authors {
-        if x == author.AuthorId {
             return i
         }
     }
@@ -110,18 +63,6 @@ func (s bookservice) GetBookById(ctx context.Context, id string) (interface{}, e
     var book interface{}
     var empty interface{}
     i := findBook(id)
-    if i == -1 {
-        return empty, err
-    }
-    book = books[i]
-    return book, nil
-}
-
-func (s bookservice) BooksBookIdAuthorsGet(ctx context.Context, id string) (interface{}, error) {
-    var err error
-    var book interface{}
-    var empty interface{}
-    i := findAuthorIdbyBook(id)
     if i == -1 {
         return empty, err
     }
@@ -154,11 +95,33 @@ func (s bookservice) UpdateBook(ctx context.Context, book Book) (string, error) 
 //==========================================================================================================================================================
 //                                                                          AUTHORS
 //==========================================================================================================================================================
+type Author struct {
+    AuthorId string `json:"authorId,omitempty"`
+	BookId string `json:"bookId,omitempty"`
+	Name string `json:"name,omitempty"`
+	Nationality string `json:"nationality,omitempty"`
+	Birth string `json:"birth,omitempty"`
+	Genere string `json:"genere,omitempty"`
+}
 
+type authorservice struct {
+    logger log.Logger
+}
 
+// Service describes the Author service.
+type AuthorService interface {
+    CreateAuthor(ctx context.Context, author Author) (string, error)
+    GetAuthorById(ctx context.Context, id string) (interface{}, error)
+    UpdateAuthor(ctx context.Context, author Author) (string, error)
+    DeleteAuthor(ctx context.Context, id string) (string, error)
+}
 
-
-
+var authors = []Author{
+    Author{AuthorId: "1", BookId: "1", Name: "Author 1",
+        Nationality: "Costa Rica", Birth: "julio 1991", Genere: "Masculino"},
+    Author{AuthorId: "2", BookId: "2", Name: "Author 2",
+        Nationality: "Espanol", Birth: "agosto 2000", Genere: "Masculino"},
+}
 
 func findAuthor(x string) int {
     for i, author := range authors {
@@ -239,7 +202,14 @@ type PublisherService interface {
     DeletePublisher(ctx context.Context, id string) (string, error)
 }
 
-
+var publishers = []Publisher{
+    Publisher{PublisherId: "1", Name: "Yensie", Country: "Inglaterra", Founded: "Costa Rica",
+		Genere: "First"},
+	Publisher{PublisherId: "2", Name: "Tatiana", Country: "Italia", Founded: "Costa Rica",
+		Genere: "Second"},
+	Publisher{PublisherId: "3", Name: "ANGIE", Country: "CHINA", Founded: "CHINA",
+		Genere: "Third"},
+}
 
 func findPublisher(x string) int {
     for i, publisher := range publishers {

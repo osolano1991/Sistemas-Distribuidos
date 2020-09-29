@@ -15,9 +15,6 @@ func main() {
 
     var svc BookService
     svc = NewService(logger)
-    
-    var svcAuthor AuthorService
-    svcAuthor = NewServiceAuthor(logger)
 
     // svc = loggingMiddleware{logger, svc}
     // svc = instrumentingMiddleware{requestCount, requestLatency, countResult, svc}
@@ -29,13 +26,6 @@ func main() {
     )
     GetByBookIdHandler := httptransport.NewServer(
         makeGetBookByIdEndpoint(svc),
-        decodeGetBookByIdRequest,
-        encodeResponse,
-    )
-    
-    ///books/1/authors/
-    GetByBookIdAuthorHandler := httptransport.NewServer(
-        makeGetBooksBookIdAuthorsEndpoint(svcAuthor),
         decodeGetBookByIdRequest,
         encodeResponse,
     )
@@ -53,8 +43,8 @@ func main() {
 //=============================================================================================================
 //                                                     Author
 //=============================================================================================================
-//var svcAuthor AuthorService
-//    svcAuthor = NewServiceAuthor(logger)
+var svcAuthor AuthorService
+    svcAuthor = NewServiceAuthor(logger)
 
     // svcAuthor = loggingMiddleware{logger, svcAuthor}
     // svcAuthor = instrumentingMiddleware{requestCount, requestLatency, countResult, svcAuthor}
@@ -110,13 +100,11 @@ var svcPublisher PublisherService
         decodeUpdatePublisherRequest,
         encodeResponsePublisher,
     )
-  //  /books/1/authors/
-  
+    
     http.Handle("/", r)
     http.Handle("/book", CreateBookHandler)
     http.Handle("/book/update", UpdateBookHandler)
     r.Handle("/book/{bookid}", GetByBookIdHandler).Methods("GET")
-    r.Handle("/book/{bookid}/authors", GetByBookIdAuthorHandler).Methods("GET")
     r.Handle("/book/{bookid}", DeleteBookHandler).Methods("DELETE")
     
     http.Handle("/author", CreateAuthorHandler)
