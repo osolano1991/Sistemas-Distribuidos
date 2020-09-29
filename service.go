@@ -46,6 +46,16 @@ func findBook(x string) int {
     return -1
 }
 
+//  /books/1/authors/
+func findAuthorIdbyBook(x string) int {
+    for i, author := range authors {
+        if x == author.AuthorId {
+            return i
+        }
+    }
+    return -1
+}
+
 func NewService(logger log.Logger) BookService {
     return &bookservice{
         logger: logger,
