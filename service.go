@@ -7,6 +7,7 @@ import (
 
 type Book struct {
     BookId    string `json:"bookId,omitempty"`
+    PublisherId    string `json:"publisherId,omitempty"`
     Title     string `json:"title,omitempty"`
     Edition   string `json:"edition,omitempty"`
     Copyright string `json:"copyright,omitempty"`
@@ -119,16 +120,10 @@ type AuthorService interface {
 }
 
 var authors = []Author{
-    Author{AuthorId: "1", BookId: "3", Name: "OSCAR", Nationality: "Costa Rica",
-		Birth: "1991", Genere: "First"},
-	Author{AuthorId: "2", BookId: "2", Name: "MARIO", Nationality: "Costa Rica",
-		Birth: "1991", Genere: "Second"},
-	Author{AuthorId: "3", BookId: "2", Name: "LUIS", Nationality: "Panama",
-		Birth: "1994", Genere: "Third"},
-	Author{AuthorId: "4", BookId: "1", Name: "JOUSER", Nationality: "FRANCES",
-		Birth: "1980", Genere: "Fourth"},
-	Author{AuthorId: "5", BookId: "4", Name: "Ronald", Nationality: "Ingles",
-		Birth: "1967", Genere: "Fiveth"},
+    Author{AuthorId: "1", BookId: "1", Name: "Author 1",
+        Nationality: "Costa Rica", Birth: "julio 1991", Genere: "Masculino"},
+    Author{AuthorId: "2", BookId: "2", Name: "Author 2",
+        Nationality: "Espanol", Birth: "agosto 2000", Genere: "Masculino"},
 }
 
 func findAuthor(x string) int {
@@ -217,10 +212,6 @@ var publishers = []Publisher{
 		Genere: "Second"},
 	Publisher{PublisherId: "3", Name: "ANGIE", Country: "CHINA", Founded: "CHINA",
 		Genere: "Third"},
-	Publisher{PublisherId: "4", Name: "NADIA", Country: "JAPON", Founded: "JAPON",
-		Genere: "Sixth"},
-	Publisher{PublisherId: "5", Name: "FLORY", Country: "NICARAGUA", Founded: "NICARAGUA",
-		Genere: "Seventh"},
 }
 
 func findPublisher(x string) int {
