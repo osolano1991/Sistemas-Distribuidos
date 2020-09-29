@@ -7,7 +7,6 @@ import (
 
 type Book struct {
     BookId    string `json:"bookId,omitempty"`
-   // PublisherId    string `json:"publisherId,omitempty"`
     Title     string `json:"title,omitempty"`
     Edition   string `json:"edition,omitempty"`
     Copyright string `json:"copyright,omitempty"`
@@ -30,28 +29,15 @@ type BookService interface {
 }
 
 var books = []Book{
-    Book{BookId: "1", Title: "Operating System Concepts", Edition: "9th",
+    Book{BookId: "Book1", Title: "Operating System Concepts", Edition: "9th",
         Copyright: "2012", Language: "ENGLISH", Pages: "976",
         Author: "Abraham Silberschatz", Publisher: "John Wiley & Sons"},
-    Book{BookId: "2", Title: "Computer Networks", Edition: "5th",
+    Book{BookId: "Book3", Title: "Computer Networks", Edition: "5th",
         Copyright: "2010", Language: "ENGLISH", Pages: "960",
         Author: "Andrew S. Tanenbaum", Publisher: "Andrew S. Tanenbaum"},
-    Book{BookId: "3", Title: "Sistemas distribuidos", Edition: "9th",
-        Copyright: "2010", Language: "ENGLISH", Pages: "660",
-        Author: "Oscar Solano Mora", Publisher: "Andrew S. Tanenbaum"},
-        
-        
-    /*Book{BookId: "1", PublisherId: "1", Title: "Libro 1",
-		Copyright: "2012", Edition: "5th", Pages: "976"},
-	Book{BookId: "2", PublisherId: "1", Title: "Libro 2",
-		Copyright: "2010", Edition: "9th", Pages: "1500"},
-	Book{BookId: "3", PublisherId: "1", Title: "Libro 3",
-		Copyright: "2010", Edition: "9th", Pages: "1500"},
-	Book{BookId: "4", PublisherId: "2", Title: "Libro 4",
-		Copyright: "2010", Edition: "11th", Pages: "722"},*/
 }
 
-func findBook(x string) int {
+func find(x string) int {
     for i, book := range books {
         if x == book.BookId {
             return i
@@ -76,7 +62,7 @@ func (s bookservice) GetBookById(ctx context.Context, id string) (interface{}, e
     var err error
     var book interface{}
     var empty interface{}
-    i := findBook(id)
+    i := find(id)
     if i == -1 {
         return empty, err
     }
@@ -86,7 +72,7 @@ func (s bookservice) GetBookById(ctx context.Context, id string) (interface{}, e
 func (s bookservice) DeleteBook(ctx context.Context, id string) (string, error) {
     var err error
     msg := ""
-    i := findBook(id)
+    i := find(id)
     if i == -1 {
         return "", err
     }
@@ -99,7 +85,7 @@ func (s bookservice) UpdateBook(ctx context.Context, book Book) (string, error) 
     var empty = ""
     var err error
     var msg = "success"
-    i := 0findBook(book.BookId)
+    i := find(book.BookId)
     if i == -1 {
         return empty, err
     }
