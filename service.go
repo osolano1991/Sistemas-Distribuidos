@@ -38,6 +38,22 @@ var books = []Book{
         Author: "Andrew S. Tanenbaum", Publisher: "Andrew S. Tanenbaum"},
 }
 
+var authors = []Author{
+    Author{AuthorId: "1", BookId: "1", Name: "Author 1",
+        Nationality: "Costa Rica", Birth: "julio 1991", Genere: "Masculino"},
+    Author{AuthorId: "2", BookId: "2", Name: "Author 2",
+        Nationality: "Espanol", Birth: "agosto 2000", Genere: "Masculino"},
+}
+
+var publishers = []Publisher{
+    Publisher{PublisherId: "1", Name: "Yensie", Country: "Inglaterra", Founded: "Costa Rica",
+		Genere: "First"},
+	Publisher{PublisherId: "2", Name: "Tatiana", Country: "Italia", Founded: "Costa Rica",
+		Genere: "Second"},
+	Publisher{PublisherId: "3", Name: "ANGIE", Country: "CHINA", Founded: "CHINA",
+		Genere: "Third"},
+}
+
 func findBook(x string) int {
     for i, book := range books {
         if x == book.BookId {
@@ -139,12 +155,7 @@ type AuthorService interface {
     DeleteAuthor(ctx context.Context, id string) (string, error)
 }
 
-var authors = []Author{
-    Author{AuthorId: "1", BookId: "1", Name: "Author 1",
-        Nationality: "Costa Rica", Birth: "julio 1991", Genere: "Masculino"},
-    Author{AuthorId: "2", BookId: "2", Name: "Author 2",
-        Nationality: "Espanol", Birth: "agosto 2000", Genere: "Masculino"},
-}
+
 
 func findAuthor(x string) int {
     for i, author := range authors {
@@ -225,14 +236,7 @@ type PublisherService interface {
     DeletePublisher(ctx context.Context, id string) (string, error)
 }
 
-var publishers = []Publisher{
-    Publisher{PublisherId: "1", Name: "Yensie", Country: "Inglaterra", Founded: "Costa Rica",
-		Genere: "First"},
-	Publisher{PublisherId: "2", Name: "Tatiana", Country: "Italia", Founded: "Costa Rica",
-		Genere: "Second"},
-	Publisher{PublisherId: "3", Name: "ANGIE", Country: "CHINA", Founded: "CHINA",
-		Genere: "Third"},
-}
+
 
 func findPublisher(x string) int {
     for i, publisher := range publishers {
