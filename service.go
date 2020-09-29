@@ -35,6 +35,17 @@ var books = []Book{
     Book{BookId: "Book3", Title: "Computer Networks", Edition: "5th",
         Copyright: "2010", Language: "ENGLISH", Pages: "960",
         Author: "Andrew S. Tanenbaum", Publisher: "Andrew S. Tanenbaum"},
+        
+    /*
+    Book{BookId: "1", PublisherId: "1", Title: "Libro 1",
+		Copyright: "2012", Edition: "5th", Pages: "976"},
+	Book{BookId: "2", PublisherId: "1", Title: "Libro 2",
+		Copyright: "2010", Edition: "9th", Pages: "1500"},
+	Book{BookId: "3", PublisherId: "1", Title: "Libro 3",
+		Copyright: "2010", Edition: "9th", Pages: "1500"},
+	Book{BookId: "4", PublisherId: "2", Title: "Libro 4",
+		Copyright: "2010", Edition: "11th", Pages: "722"},
+    */
 }
 
 func find(x string) int {
@@ -116,11 +127,17 @@ type AuthorService interface {
     DeleteAuthor(ctx context.Context, id string) (string, error)
 }
 
-var authors = []Author{
-    Author{AuthorId: "1", BookId: "1", Name: "Author 1",
-        Nationality: "Costa Rica", Birth: "julio 1991", Genere: "Masculino"},
-    Author{AuthorId: "2", BookId: "2", Name: "Author 2",
-        Nationality: "Espanol", Birth: "agosto 2000", Genere: "Masculino"},
+var authors = []Author{        
+    Author{AuthorId: "1", BookId: "3", Name: "OSCAR", Nationality: "Costa Rica",
+		Birth: "1991", Genere: "First"},
+	Author{AuthorId: "2", BookId: "2", Name: "MARIO", Nationality: "Costa Rica",
+		Birth: "1991", Genere: "Second"},
+	Author{AuthorId: "3", BookId: "2", Name: "LUIS", Nationality: "Panama",
+		Birth: "1994", Genere: "Third"},
+	Author{AuthorId: "4", BookId: "1", Name: "JOUSER", Nationality: "FRANCES",
+		Birth: "1980", Genere: "Fourth"},
+	Author{AuthorId: "5", BookId: "4", Name: "Ronald", Nationality: "Ingles",
+		Birth: "1967", Genere: "Fiveth"},
 }
 
 func findAuthor(x string) int {
@@ -203,12 +220,17 @@ type PublisherService interface {
 }
 
 var publishers = []Publisher{
+        
     Publisher{PublisherId: "1", Name: "Yensie", Country: "Inglaterra", Founded: "Costa Rica",
 		Genere: "First"},
 	Publisher{PublisherId: "2", Name: "Tatiana", Country: "Italia", Founded: "Costa Rica",
 		Genere: "Second"},
 	Publisher{PublisherId: "3", Name: "ANGIE", Country: "CHINA", Founded: "CHINA",
 		Genere: "Third"},
+	Publisher{PublisherId: "4", Name: "NADIA", Country: "JAPON", Founded: "JAPON",
+		Genere: "Sixth"},
+	Publisher{PublisherId: "5", Name: "FLORY", Country: "NICARAGUA", Founded: "NICARAGUA",
+		Genere: "Seventh"},
 }
 
 func findPublisher(x string) int {
