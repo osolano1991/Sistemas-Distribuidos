@@ -79,6 +79,18 @@ func (s bookservice) GetBookById(ctx context.Context, id string) (interface{}, e
     book = books[i]
     return book, nil
 }
+
+func (s bookservice) BooksBookIdAuthorsGet(ctx context.Context, id string) (interface{}, error) {
+    var err error
+    var book interface{}
+    var empty interface{}
+    i := findAuthorIdbyBook(id)
+    if i == -1 {
+        return empty, err
+    }
+    book = books[i]
+    return book, nil
+}
 func (s bookservice) DeleteBook(ctx context.Context, id string) (string, error) {
     var err error
     msg := ""
