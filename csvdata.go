@@ -7,7 +7,7 @@ import (
 )
 
 /*
-type Book struct {
+type Shooting struct {
     Id        string `json:"id"`
     Title     string `json:"title"`
     Edition   string `json:"edition"`
@@ -18,7 +18,7 @@ type Book struct {
     Publisher string `json:"publisher"`
 }*/
 
-type Book struct {
+type Shooting struct {
 	Id                   string `json:"id"`
 	Title                string `json:"title"`
 	Location             string `json:"location"`
@@ -42,7 +42,7 @@ type Book struct {
 	Longitude            string `json:"longitude"`
 }
 
-var books []Book
+var shootings []Shooting
 
 func checkError(message string, err error) {
 	if err != nil {
@@ -60,10 +60,10 @@ func readData(filePath string) {
 	checkError("Unable to parse file as CSV for "+filePath, err2)
 	defer file.Close()
 
-	books = []Book{}
+	shootings = []Shooting{}
 
 	for _, record := range records {
-		book := Book{
+		shooting := Shooting{
 			Id:                   record[0],
 			Title:                record[1],
 			Location:             record[2],
@@ -85,7 +85,7 @@ func readData(filePath string) {
 			Gender:               record[18],
 			Latitude:             record[18],
 			Longitude:            record[19]}
-		books = append(books, book)
+		shootings = append(shootings, shooting)
 	}
 	file.Close()
 }
@@ -99,29 +99,29 @@ func writeData(filePath string) {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	for _, book := range books {
+	for _, shooting := range shootings {
 		record := []string{
-			book.Id,
-			book.Title,
-			book.Location,
-			book.Date,
-			book.Incident_Area,
-			book.Open_Close_Location,
-			book.Target,
-			book.Cause,
-			book.Summary,
-			book.Fatalities,
-			book.Injured,
-			book.Total_Victims,
-			book.Policeman_Killed,
-			book.Age,
-			book.Employeed_Y_N,
-			book.Employed_At,
-			book.Mental_Health_Issues,
-			book.Race,
-			book.Gender,
-			book.Latitude,
-			book.Longitude}
+			shooting.Id,
+			shooting.Title,
+			shooting.Location,
+			shooting.Date,
+			shooting.Incident_Area,
+			shooting.Open_Close_Location,
+			shooting.Target,
+			shooting.Cause,
+			shooting.Summary,
+			shooting.Fatalities,
+			shooting.Injured,
+			shooting.Total_Victims,
+			shooting.Policeman_Killed,
+			shooting.Age,
+			shooting.Employeed_Y_N,
+			shooting.Employed_At,
+			shooting.Mental_Health_Issues,
+			shooting.Race,
+			shooting.Gender,
+			shooting.Latitude,
+			shooting.Longitude}
 		err := writer.Write(record)
 		checkError("Cannot write to file", err)
 	}
