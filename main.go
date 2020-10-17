@@ -26,6 +26,6 @@ func handler(writer http.ResponseWriter, request *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/shoot/", handler)
+	http.HandleFunc("/shooting/", handler)
 	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }
