@@ -7,7 +7,7 @@ import (
 
 func handler(writer http.ResponseWriter, request *http.Request) {
     var err error
-    readData("books.csv")
+    readData("Mass Shootings Dataset Ver 5.csv")
     switch request.Method {
     case "GET":
         err = handleGet(writer, request)
@@ -18,7 +18,7 @@ func handler(writer http.ResponseWriter, request *http.Request) {
     case "DELETE":
         err = handleDelete(writer, request)
     }
-    writeData("books.csv")
+    writeData("Mass Shootings Dataset Ver 5.csv")
     if err != nil {
         http.Error(writer, err.Error(), http.StatusInternalServerError)
         return
