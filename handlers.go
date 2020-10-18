@@ -17,6 +17,16 @@ func find(x string) int {
 	return -1
 }
 
+//Find by Target
+func findTarget(x string) int {
+	for i, shooting := range shootings {
+		if x == shooting.Target {
+			return i
+		}
+	}
+	return -1
+}
+
 func handleGet(w http.ResponseWriter, r *http.Request) (err error) {
 	id := path.Base(r.URL.Path)
 	fmt.Println("Id:", id)
