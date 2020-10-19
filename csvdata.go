@@ -6,18 +6,6 @@ import (
 	"os"
 )
 
-/*
-type Shooting struct {
-    Id        string `json:"id"`
-    Title     string `json:"title"`
-    Edition   string `json:"edition"`
-    Copyright string `json:"copyright"`
-    Language  string `json:"language"`
-    Pages     string `json:"pages"`
-    Author    string `json:"author"`
-    Publisher string `json:"publisher"`
-}*/
-
 type Shooting struct {
 	Id                   string `json:"id"`
 	Title                string `json:"title"`
@@ -70,8 +58,8 @@ func readData(filePath string) {
 			Date:                 record[3],
 			Incident_Area:        record[4],
 			Open_Close_Location:  record[5],
-			target:               record[6],
-			cause:                record[7],
+			Target:               record[6],
+			Cause:                record[7],
 			Summary:              record[8],
 			Fatalities:           record[9],
 			Injured:              record[10],
@@ -107,8 +95,8 @@ func writeData(filePath string) {
 			shooting.Date,
 			shooting.Incident_Area,
 			shooting.Open_Close_Location,
-			shooting.target,
-			shooting.cause,
+			shooting.Target,
+			shooting.Cause,
 			shooting.Summary,
 			shooting.Fatalities,
 			shooting.Injured,
