@@ -10,7 +10,7 @@ import (
 
 func find(x string) int {
 	for i, shooting := range shootings {
-		if x == shooting.Id || x == shooting.Target || x == shooting.Cause {
+		if x == shooting.Id || x == shooting.Target || x == shooting.Cause || x == shooting.Location {
 			return i
 		}
 	}
@@ -107,7 +107,7 @@ func handlePut(w http.ResponseWriter, r *http.Request) (err error) {
 
 	//Funcionando
 	for index, item := range shootings {
-		if item.Id == id || item.Target == id || item.Cause == id {
+		if item.Id == id || item.Target == id || item.Cause == id || item.Location == id {
 			shootings = append(shootings[:index], shootings[index+1:]...)
 			var Shooting Shooting
 			_ = json.NewDecoder(r.Body).Decode(&Shooting)
