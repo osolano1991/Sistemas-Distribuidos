@@ -10,17 +10,7 @@ import (
 
 func find(x string) int {
 	for i, shooting := range shootings {
-		if x == shooting.Id {
-			return i
-		}
-	}
-	return -1
-}
-
-//Find by Target
-func findTarget(x string) int {
-	for i, shooting := range shootings {
-		if x == shooting.Target {
+		if x == shooting.Id || x == shooting.target || x == shooting.cause {
 			return i
 		}
 	}
@@ -29,24 +19,30 @@ func findTarget(x string) int {
 
 func handleGet(w http.ResponseWriter, r *http.Request) (err error) {
 	id := path.Base(r.URL.Path)
-	fmt.Println("Id:", id)
+	fmt.Println("Parameter:", id)
 	if id == "shooting" {
-		/* w.Header().Set("Content-Type", "application/json")
-		   json.NewEncoder(w).Encode(shootings)*/
 		w.Header().Set("Content-Type", "application/json")
 		dataJson, _ := json.Marshal(shootings)
 		w.Write(dataJson)
 	}
 	checkError("Parse error", err)
 	// fmt.Println("Id:",id)
+	/*
+		    for i, shooting := range shootings {
+				if x == shooting.Id {
+					return i
+				}
+			}
+	*/
 	i := find(id)
 	if i == -1 {
-		fmt.Println("Id:", i)
+		fmt.Println("Parameter:", i)
 		if id != "shooting" {
-			fmt.Fprintf(w, "No se encuentra el ID %v", id)
+			fmt.Fprintf(w, "No se encuentra el parametro %v", id)
 		}
 		return
 	}
+
 	dataJson, err := json.Marshal(shootings[i])
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(dataJson)
@@ -111,7 +107,7 @@ func handlePut(w http.ResponseWriter, r *http.Request) (err error) {
 
 	//Funcionando
 	for index, item := range shootings {
-		if item.Id == id {
+		if item.Id == id || item.target == id || item.cause == id {
 			shootings = append(shootings[:index], shootings[index+1:]...)
 			var Shooting Shooting
 			_ = json.NewDecoder(r.Body).Decode(&Shooting)
